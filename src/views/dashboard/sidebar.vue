@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-active="$route.path" class="el-menu-vertical" @open="handleOpen" @close="handleClose" router>
+  <el-menu :default-active="$route.path" class="el-menu-vertical" router>
 
     <el-menu-item index="/dashboard" >
         <i class="iconfont icon-fabiaowenzhang"></i>
@@ -11,7 +11,7 @@
       <span slot="title">写作</span>
     </el-menu-item>
 
-    <el-menu-item index="/share">
+    <!-- <el-menu-item index="/share">
       <i class="iconfont icon-fenxiang"></i>
       <span slot="title">分享</span>
     </el-menu-item>
@@ -24,7 +24,7 @@
     <el-menu-item index="/earn">
       <i class="iconfont icon-leijishouyi"></i>
       <span slot="title">收益</span>
-    </el-menu-item>
+    </el-menu-item> -->
 
     <el-menu-item index="/guide">
       <i class="iconfont icon-bangzhu"></i>
@@ -36,7 +36,12 @@
       <span slot="title">设置</span>
     </el-menu-item>
 
-    <el-menu-item index="/signout">
+    <el-menu-item index="/mm">
+      <i class="iconfont icon-shezhi"></i>
+      <span slot="title">MetaMask</span>
+    </el-menu-item>
+
+    <el-menu-item @click="logout">
       <i class="iconfont icon-tuichu"></i>
       <span slot="title">退出</span>
     </el-menu-item>
@@ -47,11 +52,15 @@
 <script>
 export default {
   methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath);
+    // handleOpen (key, keyPath) {
+    //   console.log(key, keyPath);
+    // },
+    // handleClose (key, keyPath) {
+    //   console.log(key, keyPath);
+    // }
+    logout(){
+      this.$store.commit('users/logout');
+      // console.log('logout');
     }
   }
 }

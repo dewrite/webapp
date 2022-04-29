@@ -18,6 +18,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+
 import store from './store'
 
 import Argon from "./plugins/argon-kit";
@@ -37,6 +38,7 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import './assets/iconfont.css'
 
+import './permission' // permission control
 
 const messages = {
   zh_CN
@@ -50,7 +52,6 @@ Vue.use(Argon);
 Vue.use(ElementUI);
 Vue.use(Toast, {
   position: "bottom-right",
-  timeout: 3000,
 });
 Vue.use(mavonEditor)
 

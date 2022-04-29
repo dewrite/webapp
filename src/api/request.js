@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Notification } from 'element-ui'
 import store from '@/store'
+import Vue from 'vue'
 
 const config = {
   baseURL: process.env.VUE_APP_API, // 配置API接口地址
@@ -19,7 +20,7 @@ service.interceptors.request.use(
     return config
   },
   (error) => {
-    console.log(error) // for debug
+    console.log("xxxx" , error) // for debug
     return Promise.reject(error)
   }
 )
@@ -35,13 +36,7 @@ service.interceptors.response.use(
             })
             .join('')
         : ''
-
-      Notification({
-        type: 'error',
-        title: '服务器提示',
-        dangerouslyUseHTMLString: true,
-        message: res.error + errInfo,
-      })
+      Vue.$toast.error(res.error + errInfo)
     }
     return response
   },

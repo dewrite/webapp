@@ -1,7 +1,7 @@
 export default {
     hello: 'hello world',
     title: 'hello world',
-    notmm: '没有安装MetaMask插件，请去这里下载安装：https://metamask.io/',
+    notInstall: '没有安装MetaMask插件,点击下载安装。',
     connect: '连接钱包',
     connectSuccess: '钱包连接成功',
     home:{

@@ -5,6 +5,15 @@ import request from './request'
 // ====================================
 // ====================================
 /**
+ * 设置文章的拥有者合约
+ */
+export function ethSetOwner(id) {
+  return request({
+    url: '/api/articles/eth/owner/' + id,
+    method: 'get',
+  })
+}
+/**
  * 获取对象列表
  */
 export function fetch(query) {

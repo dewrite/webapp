@@ -32,47 +32,11 @@ export default {
       avatar: state => state.users.avatar,
     }),
   },
-  created () {
-    this.checkIfWalletIsConnected()
-  },
   methods: {
     ...mapMutations({
       setAddress: "users/setAddress", // this.$store.commit('increment')
       setNetwork: "users/setNetwork"
     }),
-    ...mapActions({
-      signin: 'users/signin'
-    }),
-    
-    updateAddress (addr) {
-      this.setAddress(addr)
-      this.signin(addr)
-    },
-    // 检查钱包是否连接，登录，授权
-    async checkIfWalletIsConnected () {
-      const { ethereum } = window
-      if (!Boolean(ethereum && ethereum.isMetaMask)) {
-        this.$router.push('/')
-        return
-      }
-
-      const accounts = await ethereum.request({ method: 'eth_accounts' })
-
-      if (accounts.length !== 0) {
-        this.updateAddress(accounts[0])
-      }
-
-      // This is the new part, we check the user's network chain ID
-      const chainId = await ethereum.request({ method: 'eth_chainId' })
-      this.setNetwork(networks[chainId])
-
-      this.networkStat = process.env.VUE_APP_DEFAULT_NETWORK == chainId
-
-      ethereum.on('chainChanged', (_chainId) => {
-        this.networkStat = process.env.VUE_APP_DEFAULT_NETWORK == _chainId
-        this.setNetwork(networks[_chainId])
-      })
-    },
   },
 }
 </script>
@@ -81,15 +45,19 @@ export default {
   border-bottom: solid 2px #00000008;
   padding: 16px;
 }
-.address{
+.address {
   font-size: 1.2rem;
   font-weight: bold;
   color: #000;
   text-align: center;
 }
-.name{
+.name {
   font-size: 1rem;
   font-weight: bold;
 }
-
+.el-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

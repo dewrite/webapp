@@ -9,12 +9,18 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Profile from './views/Profile.vue'
 import setting from './views/Setting.vue'
-import write from './views/write.vue'
+import write from './views/Write.vue'
+import mm from './views/MM.vue'
 
 Vue.use(Router)
 
+// router.beforeEach((to, from, next) => {
+//   // ...
+// })
+
 export default new Router({
   linkExactActiveClass: 'active',
+  // mode: 'history', // require service support
   routes: [
     {
       path: '/',
@@ -30,6 +36,14 @@ export default new Router({
       name: 'dashboard',
       components: {
         default: Dashboard,
+      },
+      meta: { admin: true },
+    },
+    {
+      path: '/mm',
+      name: 'mm',
+      components: {
+        default: mm,
       },
       meta: { admin: true },
     },

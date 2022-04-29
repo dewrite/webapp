@@ -10,7 +10,7 @@
     <div class="userinfo">
 
       <el-badge>
-        <el-avatar :size="70" :src="avatar" fit="contain"></el-avatar>
+        <el-avatar :size="70" :src="avatar" :fit="fit"></el-avatar>
         <el-tooltip placement="top">
           <div slot="content">上传头像</div>
           <el-upload :action="uploadapi" class="avatar-uploader" :show-file-list="false" :on-success="avatarSuccess">
@@ -34,6 +34,7 @@ export default {
   data () {
     return {
       uploadapi: process.env.VUE_APP_API + "/api/public/upload/s3",
+      fit: 'cover'
     }
   },
   computed: {
@@ -69,7 +70,6 @@ export default {
 </script>
 
 <style scoped lang=scss>
-
 .cover {
   /* background: url('http://127.0.0.1:9000/20220424/6da7838865ce1904ccb4abfa1ec226cb.jpeg'); */
   background-size: cover;
@@ -115,6 +115,11 @@ export default {
 
   /deep/ .el-button.is-circle {
     padding: 5px;
+  }
+  .el-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

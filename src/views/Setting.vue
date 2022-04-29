@@ -14,21 +14,33 @@
                 <cover />
                 <div class="item">
                   <div class="label">昵称</div>
-                  <div class="desc">DeWrite是匿名网络，不要求必须设置昵称，但设置昵称可以帮你更好的记住你的身份。
+                  <div class="desc">DeWrite.io 虽然是匿名网络，但设置昵称可以帮你更好的记住你的身份。
                   </div>
                   <el-input v-model="name" placeholder="昵称"></el-input>
                 </div>
 
                 <div class="item">
-                  <div class="label">标题</div>
-                  <div class="desc">节点标题显示在节点首页，是节点内容的主题。</div>
-                  <el-input v-model="title" placeholder="博客主题"></el-input>
+                  <div class="label">子域名</div>
+                  <div class="desc">为自己的去中心化网站设置子域名，可以让你的网站更加独立。
+                  </div>
+                  <el-input v-model="domain" placeholder="子域名"></el-input>
                 </div>
 
                 <div class="item">
-                  <div class="label">介绍</div>
-                  <div class="desc">节点标题显示在节点首页，是节点内容的主题。</div>
-                  <el-input v-model="desc" placeholder="博客介绍" type="textarea" :rows="3"></el-input>
+                  <div class="label">个人网站主题</div>
+                  <div class="desc">个人网站主题会显示在你的网站首页。</div>
+                  <el-input v-model="title" placeholder="个人网站主题"></el-input>
+                </div>
+
+                <div class="item">
+                  <div class="label">个人网站介绍</div>
+                  <div class="desc">个人网站介绍会显示在你的网站首页。</div>
+                  <el-input v-model="desc" placeholder="个人网站介绍" type="textarea" :rows="3"></el-input>
+                </div>
+
+                <div class="item buttons">
+                  <el-button @click="save()" :disabled="saveLock" type="primary" round>保存</el-button>
+
                 </div>
 
               </el-col>
@@ -46,8 +58,9 @@
 
 <script>
 import maintop from "./dashboard/maintop";
-import debounce from '@/utils/debounce';
 import cover from "./dashboard/cover";
+import { init, update } from '@/api/site'
+
 import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
@@ -58,10 +71,12 @@ export default {
   },
   data () {
     return {
+      saveLock: false,
     }
   },
   computed: {
     ...mapState({
+      uid: state => state.users.id,
       address: state => state.users.address,
       network: state => state.users.network,
     }),
@@ -71,7 +86,6 @@ export default {
       },
       set (value) {
         this.setTitle(value)
-        this.debounceUpdate({ title: value })
       }
     },
     desc: {
@@ -80,7 +94,6 @@ export default {
       },
       set (value) {
         this.setDesc(value)
-        this.debounceUpdate({ desc: value })
       }
     },
     name: {
@@ -88,9 +101,7 @@ export default {
         return this.$store.state.users.name
       },
       set (value) {
-        console.log(value);
         this.setName(value)
-        this.debounceUpdate({ name: value })
       }
     },
     avatar: {
@@ -99,23 +110,57 @@ export default {
       },
       set (value) {
         this.setAvatar(value)
-        this.debounceUpdate({ avatar: value })
+      }
+    },
+    domain: {
+      get () {
+        return this.$store.state.users.domain
+      },
+      set (value) {
+        this.setDomain(value)
       }
     },
   },
-  created: function () {
-    this.debounceUpdate = debounce((data)=> this.update(data)  )
-  },
+  // created: function () {
+  //   this.debounceUpdate = debounce((data)=> this.update(data)  )
+  // },
   methods: {
     ...mapMutations({
       setName: "users/setName",
       setTitle: "users/setTitle",
       setDesc: "users/setDesc",
       setAvatar: "users/setAvatar",
+      setDomain: "users/setDomain",
     }),
     ...mapActions({
       update: 'users/update'
     }),
+    async save () {
+      this.saveLock = true
+
+      const tid = this.$toast.info(
+        "保存并更新...", {
+        position: "bottom-right",
+        icon: "fa fa-rocket",
+        rtl: false
+      })
+      try {
+        await this.update({
+          name: this.name,
+          title: this.title,
+          desc: this.desc,
+          domain: this.domain,
+        })
+        await init(this.uid)
+        await update(this.uid)
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.$toast.dismiss(tid);
+        this.saveLock = false
+      }
+
+    }
   }
 }
 </script>
@@ -156,11 +201,28 @@ export default {
     margin-bottom: 10px;
   }
 }
-/deep/ .el-input__inner , .el-textarea__inner{
+
+/deep/ .el-input__inner,
+.el-textarea__inner {
   font-size: 1.2rem;
 }
-/deep/ .el-textarea__inner{
+/deep/ .el-textarea__inner {
   font-size: 1.2rem;
 }
 
+.buttons {
+  padding: 20px;
+  text-align: center;
+  /deep/ .el-button--primary {
+    width: 80%;
+  }
+  /deep/ .el-button {
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-radius: 50px;
+  }
+  /deep/ .iconfont {
+    font-size: 1.6rem;
+  }
+}
 </style>

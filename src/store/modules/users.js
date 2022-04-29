@@ -1,5 +1,6 @@
 import { signin } from '@/api/login'
 import { updateModel } from '@/api/user'
+import router from '../../router'
 
 const state = {
   address: '',
@@ -10,9 +11,11 @@ const state = {
   avatar: './default.png',
   desc: '',
   cover: '',
+  domain: "",
   token: '',
   id: '',
   percentage: 0,
+  signature: '',
   task: "",
   roles: []
 }
@@ -20,6 +23,13 @@ const state = {
 const mutations = {
   setPercentage: (state, v) => {
     state.percentage = v
+  },
+  setSignature: (state, v) => {
+    state.signature = v
+  },
+  
+  setDomain: (state, v) => {
+    state.domain = v
   },
   setTask: (state, v) => {
     state.task = v
@@ -51,6 +61,13 @@ const mutations = {
   setToken: (state, v) => {
     state.token = v
   },
+  logout: (state) => {
+    state.address = ''
+    state.network = ''
+    state.token = ''
+    state.id = ''
+    router.push('/')
+  }
 }
 
 const actions = {
@@ -65,11 +82,14 @@ const actions = {
           if (data.user._id) {
             commit('setId', data.user._id)
           }
+          if (data.user.signature) {
+            commit('setSignature', data.user.signature)
+          }
           if (data.user.avatar) {
             commit('setAvatar', data.user.avatar)
           }
-          if (data.user.realName) {
-            commit('setName', data.user.realName)
+          if (data.user.name) {
+            commit('setName', data.user.name)
           }
           if (data.user.title) {
             commit('setTitle', data.user.title)
@@ -79,6 +99,9 @@ const actions = {
           }
           if (data.user.cover) {
             commit('setCover', data.user.cover)
+          }
+          if (data.user.domain) {
+            commit('setDomain', data.user.domain)
           }
           resolve()
         } else {
@@ -94,23 +117,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       updateModel( state.id , data).then(response => {
         if (response.data && response.data.code === 0) {
-          // const { data } = response.data
-          // console.log(data);
-          // if (data.avatar) {
-          //   commit('setAvatar', data.avatar)
-          // }
-          // if (data.name) {
-          //   commit('setName', data.name)
-          // }
-          // if (data.title) {
-          //   commit('setTitle', data.title)
-          // }
-          // if (data.desc) {
-          //   commit('setDesc', data.desc)
-          // }
-          // if (data.cover) {
-          //   commit('setCover', data.cover)
-          // }
           resolve()
         } else {
           reject(response.data)

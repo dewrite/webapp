@@ -38,7 +38,7 @@ export default {
     sidetop,
   },
   computed: {
-    admin() {
+    admin () {
       return this.$route.matched.some(record => record.meta.admin);
     }
   }
@@ -53,19 +53,19 @@ export default {
   height: 100vh;
 }
 
-.sidepanel{
+.sidepanel {
   border-right: solid 2px #00000008;
   min-height: 100%;
   height: 100vh;
   overflow-x: auto;
 }
 
-.mainpanel{
+.mainpanel {
   min-height: 100vh;
   height: 100vh;
 }
 
-.de-tag{
+.de-tag {
   text-align: center;
   border-radius: 15px;
   width: 100px;
@@ -76,4 +76,8 @@ export default {
   color: #00000066;
   background-color: #00000008;
 }
+.center {
+  text-align: center;
+}
+
 </style>
