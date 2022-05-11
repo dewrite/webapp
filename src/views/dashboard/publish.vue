@@ -4,14 +4,14 @@
       <el-step title="验证签名"></el-step>
       <el-step title="发布NFT"></el-step>
       <el-step title="授权支付"></el-step>
-      <el-step title="获得拥有权"></el-step>
+      <el-step title="获得分红权"></el-step>
     </el-steps>
 
     <!-- ################### layout start ###################  -->
     <!-- <el-button @click="personal_sign()">验证签名</el-button>
     <el-button @click="mint()">发布NFT</el-button>
     <el-button @click="approve()">授权支付</el-button>
-    <el-button @click="set_owner()">获得拥有权</el-button> -->
+    <el-button @click="set_owner()">获得分红权</el-button> -->
     <br />
     <br />
     <div
@@ -23,13 +23,19 @@
     <br />
     <el-alert
       :closable="false"
-      title="* 发行NFT上链需要四个步骤，大概需要3分钟，请耐心等待。"
+      title="* 作者将文章发行为 NFT 需要 0.01 WETH。本项目暂时仅支持 Polygon 链。"
+      type="success"
+    ></el-alert>
+
+    <el-alert
+      :closable="false"
+      title="* 发行 NFT 上链需要四个步骤，大概总用时 3 分钟，请耐心等待。"
       type="success"
     ></el-alert>
     
     <el-alert
       :closable="false"
-      title="* 期间会多次弹出MetaMask窗口，请注意操作。"
+      title="* 期间会多次弹出 MetaMask 授权或执行窗口，请注意操作。"
       type="success"
     ></el-alert>
 

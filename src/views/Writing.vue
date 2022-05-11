@@ -27,10 +27,6 @@
       :before-close="handleClose"
     >
       <publish v-if='dialogVisible' :id="id" @close="dialogVisible = false" />
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
@@ -76,7 +72,7 @@ export default {
   },
   methods: {
     handleClose(done) {
-      this.$confirm('强制关闭可能让上链失败，并产生费用，建议等待执行完成')
+      this.$confirm('强制关闭可能让NFT上链失败，并可能重复收费，建议耐心等待自动执行完成')
         .then((_) => {
           done()
         })

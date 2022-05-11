@@ -36,10 +36,10 @@
       <span slot="title">设置</span>
     </el-menu-item>
 
-    <el-menu-item index="/mm">
+    <!-- <el-menu-item index="/mm">
       <i class="iconfont icon-shezhi"></i>
       <span slot="title">MetaMask</span>
-    </el-menu-item>
+    </el-menu-item> -->
 
     <el-menu-item @click="logout">
       <i class="iconfont icon-tuichu"></i>
