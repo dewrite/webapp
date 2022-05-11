@@ -9,7 +9,7 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Profile from './views/Profile.vue'
 import setting from './views/Setting.vue'
-import write from './views/Write.vue'
+import write from './views/Writing.vue'
 import mm from './views/MM.vue'
 
 Vue.use(Router)
