@@ -26,7 +26,7 @@
       width="30%"
       :before-close="handleClose"
     >
-      <publish v-if='dialogVisible' :id="id" @close="dialogVisible = false" />
+      <publish v-if="dialogVisible" :id="id" @close="dialogVisible = false" />
     </el-dialog>
   </div>
 </template>
@@ -56,6 +56,7 @@ export default {
   computed: {
     ...mapState({
       uid: (state) => state.users.id,
+      token: (state) => state.users.token,
     }),
   },
   async mounted() {
@@ -86,22 +87,28 @@ export default {
         url: process.env.VUE_APP_API + '/api/public/upload/s3',
         method: 'post',
         data: formdata,
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: 'Bearer ' + this.token,
+        },
       }).then((req) => {
         if (req.data && req.data.code === 0) {
           // 第二步.将图片插入到编辑器中.
-          console.log('upload: ', req.data.data.url)
+          // console.log('upload: ', req.data.data.url)
           this.$refs.md.$img2Url(pos, req.data.data.url)
         }
       })
     },
     $imgDel(pos) {
-      console.log('remove: ', pos[0])
+      // console.log('remove: ', pos[0])
       axios({
         url: process.env.VUE_APP_API + '/api/public/s3',
         method: 'delete',
         params: { file: pos[0] },
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: 'Bearer ' + this.token,
+        },
       })
     },
     async save() {

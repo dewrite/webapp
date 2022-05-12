@@ -37,6 +37,7 @@ import './element-variables.scss'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import './assets/iconfont.css'
+import VueAnalytics from 'vue-analytics';
 
 import './permission' // permission control
 
@@ -48,13 +49,16 @@ Vue.config.productionTip = false;
 
 Vue.use(VueI18n)
 Vue.use(Vuex)
-Vue.use(Argon);
-Vue.use(ElementUI);
+Vue.use(Argon)
+Vue.use(ElementUI)
 Vue.use(Toast, {
   position: "bottom-right",
-});
+})
+Vue.use(VueAnalytics, {
+  id: 'G-24BN5J40ZY',
+  router
+})
 Vue.use(mavonEditor)
-
 
 const i18n = new VueI18n({
   locale: 'zh_CN', // set locale
